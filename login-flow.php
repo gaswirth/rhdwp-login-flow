@@ -20,7 +20,7 @@ class RHD_Login_Flow {
 		add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );
 		add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
 		add_action( 'wp_logout', array( $this, 'redirect_after_logout' ) );
-		//add_filter( 'login_redirect', array( $this, 'redirect_after_login' ), 10, 3 );
+		add_filter( 'login_redirect', array( $this, 'redirect_after_login' ), 10, 3 );
     }
 
     /**
@@ -256,7 +256,7 @@ class RHD_Login_Flow {
 	 * @return string Redirect URL
 	 */
 	public function redirect_after_login( $redirect_to, $requested_redirect_to, $user ) {
-		$redirect_url = home_url();
+		$redirect_url = home_url( '/sales' );
 
 		if ( ! isset( $user->ID ) ) {
 			return $redirect_url;
@@ -271,7 +271,7 @@ class RHD_Login_Flow {
 			}
 		} else {
 			// Non-admin users always go to their account page after login
-			$redirect_url = home_url( 'member-account' );
+			$redirect_url = home_url( 'almost-ready' );
 		}
 
 		return wp_validate_redirect( $redirect_url, home_url() );
